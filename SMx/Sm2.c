@@ -2083,6 +2083,61 @@ void KDF(unsigned char *data, unsigned int data_len, unsigned int key_len, unsig
 * parameters:
 -- sk[in]	        : 私钥
 -- sk_len[in]       : 私钥长度
+-- pkx[out]			: 公钥X
+-- pky[out]			: 公钥Y
+* return 		        : 0--success;
+非0--error code
+***************************************************/
+int EccPairKey(unsigned char *sk, unsigned int sk_len,
+               unsigned char *pkx, unsigned char *pky)
+{
+	int i, j;
+	unsigned int prikey[DIG_LEN] = { 0 };
+	unsigned int x;
+	affpoint pubkey;
+
+	if(sk_len != 4 * DIG_LEN) {
+		return(-1);
+	}
+
+	for(i = 0, j = 0; i < DIG_LEN; i++, j += 4) {
+		prikey[DIG_LEN - 1 - i] = (((unsigned int)(sk[j]) << 24) | ((unsigned int)(sk[j + 1]) << 16)
+		                           | ((unsigned int)(sk[j + 2]) << 8) | ((unsigned int)(sk[j + 3])));
+	}
+
+	basepointmul(&pubkey, prikey);
+
+	x = 0;
+	for(i = 0; i < DIG_LEN; i++) {
+		x |= (pubkey.x[i] | pubkey.y[i]);
+	}
+	if(x == 0) {
+		return(-1);
+	}
+
+	for(i = 0, j = 0; i < DIG_LEN; i++, j += 4) {
+		pkx[j] = (unsigned char)((pubkey.x[DIG_LEN - 1 - i] >> 24) & 0xff);
+		pkx[j + 1] = (unsigned char)((pubkey.x[DIG_LEN - 1 - i] >> 16) & 0xff);
+		pkx[j + 2] = (unsigned char)((pubkey.x[DIG_LEN - 1 - i] >> 8) & 0xff);
+		pkx[j + 3] = (unsigned char)((pubkey.x[DIG_LEN - 1 - i]) & 0xff);
+
+		pky[j ] = (unsigned char)((pubkey.y[DIG_LEN - 1 - i] >> 24) & 0xff);
+		pky[j + 1] = (unsigned char)((pubkey.y[DIG_LEN - 1 - i] >> 16) & 0xff);
+		pky[j + 2] = (unsigned char)((pubkey.y[DIG_LEN - 1 - i] >> 8) & 0xff);
+		pky[j + 3] = (unsigned char)((pubkey.y[DIG_LEN - 1 - i]) & 0xff);
+	}
+
+	//*pk_len = 8 * DIG_LEN;
+
+	return(0);
+}
+
+/***************************************************
+* function          	: EccMakeKey
+* description	        : ECC公/私钥生成接口函数
+* parameters:
+-- sk[in]	        : 私钥
+-- sk_len[in]       : 私钥长度
 -- type[in]         : 曲线类型
 -- pk[out]			: 公钥
 -- pk_len[out]		: 公钥长度

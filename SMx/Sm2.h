@@ -22,6 +22,12 @@ typedef struct {
 
 typedef projpoint *point;
 
+// ECC数据结构体
+typedef struct {
+	byte  x[DIG_LEN * 4];
+	byte  y[DIG_LEN * 4];
+} Ecckey;
+
 /***************************************************
 * function			   : KDF
 * description		   : KDF函数
@@ -34,6 +40,20 @@ typedef projpoint *point;
 非0--error code
 ***************************************************/
 void KDF(byte *data, uint data_len, uint key_len, byte *key);
+
+/***************************************************
+* function          	: EccMakeKey
+* description	        : ECC公/私钥生成接口函数
+* parameters:
+-- sk[in]	        : 私钥
+-- sk_len[in]       : 私钥长度
+-- pkx[out]			: 公钥X
+-- pky[out]			: 公钥Y
+* return 		        : 0--success;
+非0--error code
+***************************************************/
+int EccPairKey(unsigned char *sk, unsigned int sk_len,
+               unsigned char *pkx, unsigned char *pky);
 
 /***************************************************
 * function          	: EccMakeKey
