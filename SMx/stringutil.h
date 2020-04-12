@@ -9,12 +9,12 @@ const static byte lett16[] = {'0', '1', '2', '3', '4', '5', '6', '7',
                               '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'
                              };
 
-std::string byte2HexStr(const std::string &src);
-std::string HexStr2byte(const std::string &src);
-std::string uint2String(uint *src);
-void pkcs7(const byte *input, const uint len, const uint n, byte *output);
-void pkcs7_2(char *input, const uint len, const uint n, byte *output);
-std::string sblank(const uint &n);
+//std::string byte2HexStr(const std::string &src);
+//std::string HexStr2byte(const std::string &src);
+//std::string uint2String(uint *src);
+//void pkcs7(const byte *input, const uint len, const uint n, byte *output);
+//void pkcs7_2(char *input, const uint len, const uint n, byte *output);
+//std::string sblank(const uint &n);
 
 //十六进制字符转int
 int HexChar2Int(char c);
