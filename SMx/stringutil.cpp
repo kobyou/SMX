@@ -1,5 +1,6 @@
 #include "stringutil.h"
-
+#include <time.h>
+#include <stdlib.h>
 //std::string byte2HexStr(const std::string &src)
 //{
 //	uint l = src.size();
@@ -138,6 +139,20 @@ void ToUpper(std::string &s)
 void ToLower(std::string &s)
 {
 	transform(s.begin(), s.end(), s.begin(), tolower);
+}
+
+/*
+功能：生成指定长度随机数
+输入：len随机数长度
+输出：rand随机数
+返回：无
+*/
+void GenRand(unsigned char rnd[], int len)
+{
+	srand((uint)time(NULL));
+	for(int i = 0; i < len; i++) {
+		rnd[i] = (BYTE)(rand() % 256);
+	}
 }
 
 

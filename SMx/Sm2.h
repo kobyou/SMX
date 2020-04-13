@@ -28,6 +28,7 @@ typedef struct {
 	byte  y[DIG_LEN * 4];
 } Ecckey;
 
+
 /***************************************************
 * function			   : KDF
 * description		   : KDFº¯Êý

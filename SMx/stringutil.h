@@ -26,3 +26,10 @@ std::string Bytes2HexStr(char* bytes, int bytelength);
 void ToUpper(std::string &s);
 //string全部转小写
 void ToLower(std::string &s);
+/*
+功能：生成指定长度随机数
+输入：len随机数长度
+输出：rand随机数
+返回：无
+*/
+void GenRand(unsigned char rnd[], int len);
