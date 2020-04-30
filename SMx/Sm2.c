@@ -2347,7 +2347,6 @@ int EccVerify(const unsigned char *hash, unsigned int hash_len,
 	unsigned int R[DIG_LEN] = { 0 };
 	affpoint p1, p2, p3;
 	unsigned int x;
-
 	if(hash_len != 4 * DIG_LEN) {
 		return(-1);
 	}
